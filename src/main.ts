@@ -1,24 +1,10 @@
 import { beginLoopAt } from './utils/timing.js'
 import Vec2 from './classes/Vec2.js'
 import Entity from './classes/Entity.js'
-import Bloon from './classes/Bloon.js'
+import Bloon from './classes/Entities/Bloon.js'
 import { loadImage } from './utils/loaders.js'
-import { dCircle } from './utils/canvasMethods.js'
 import Level from './classes/Level.js'
-
-class Ape extends Entity{
-    constructor(pos: Vec2) {
-        super(pos)
-    }
-
-    draw(context: CanvasRenderingContext2D) {
-        dCircle(context, this.pos, 10)
-    }
-
-    update (dT: number, level: Level) {
-        
-    }
-}
+import Ape from './classes/Entities/Ape.js'
 
 async function main(canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d')
@@ -27,7 +13,7 @@ async function main(canvas: HTMLCanvasElement) {
     
     const ape: Entity = new Ape(new Vec2(300, 150))
 
-    level.entities.push(ape)
+    level.towers.push(ape)
 
     const update = (dT: number) => {
         context!.fillStyle = "#f4f4f4"
@@ -38,9 +24,9 @@ async function main(canvas: HTMLCanvasElement) {
         level.update(dT)
         level.draw(context!)
 
-        if (level.lifeTime > 1) {
+        if (level.lifeTime > 0.4) {
             level.lifeTime = 0
-            level.entities.push(new Bloon(new Vec2(200, -10)))
+            level.bloons.push(new Bloon(new Vec2(200, -10)))
         }
         return 0
     }

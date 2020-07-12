@@ -5,15 +5,28 @@ class Entity {
     pos: Vec2
     vel: Vec2 = new Vec2()
     lifeTime: number = 0
-    dead: boolean = false
     deathTimer: number = 0
+    removeAfter: number = 0.15
+    dead: boolean = false
+    collisionRadius: number
     
-    constructor(pos: Vec2) {
+    constructor(pos: Vec2, collisionRadius: number) {
         this.pos = pos
+        this.collisionRadius = collisionRadius
     }
 
-    update(dT: number, level?: Level) {
+    onCollision(us: Entity, them: Entity) {
 
+    }
+
+    onUpdate(dT: number, level?: Level) {
+
+    }
+
+    update(dT: number, level: Level) {
+        this.onUpdate(dT, level)
+        
+        this.lifeTime += dT
     }
 
     draw(context: CanvasRenderingContext2D) {

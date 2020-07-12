@@ -6,8 +6,17 @@ export default class Vec2 {
         this.y = y || 0
     }
 
+    norm(): Vec2 {
+        const length = Math.sqrt(this.length2())
+        return new Vec2(this.x / length, this.y / length)
+    }
+
     length2(): number {
-        return this.x * this.x + this.y * this.y
+        return this.dot(this)
+    }
+
+    dot(rhs: Vec2): number {
+        return this.x * rhs.x + this.y * rhs.y
     }
 
     add(rhs: Vec2): Vec2 {
