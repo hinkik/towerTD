@@ -6,6 +6,10 @@ export default class Vec2 {
         this.y = y || 0
     }
 
+    length2(): number {
+        return this.x * this.x + this.y * this.y
+    }
+
     add(rhs: Vec2): Vec2 {
         return new Vec2(this.x + rhs.x, this.y + rhs.y)
     }

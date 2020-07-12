@@ -1,36 +1,47 @@
 import { beginLoopAt } from './utils/timing.js'
 import Vec2 from './classes/Vec2.js'
-import { dSphere } from './utils/canvasMethods.js'
 import Entity from './classes/Entity.js'
+import Bloon from './classes/Bloon.js'
+import { loadImage } from './utils/loaders.js'
+import { dCircle } from './utils/canvasMethods.js'
+import Level from './classes/Level.js'
 
-function createBloon(pos: Vec2) {
-    const bloon = new Entity()
-    bloon.pos = pos
-    
-    bloon.update = (dT) => {
-        bloon.pos = bloon.pos.add(bloon.vel.scale(dT))
-        bloon.vel = bloon.vel.add(new Vec2(0, 1))
+class Ape extends Entity{
+    constructor(pos: Vec2) {
+        super(pos)
     }
-    bloon.draw = (context: CanvasRenderingContext2D) => {
-        dSphere(context!, bloon.pos, 10)
+
+    draw(context: CanvasRenderingContext2D) {
+        dCircle(context, this.pos, 10)
     }
-    bloon.vel.x = (Math.random() - 0.50) * 100
-    return bloon
+
+    update (dT: number, level: Level) {
+        
+    }
 }
 
-function main(canvas: HTMLCanvasElement): void {
+async function main(canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d')
+    const texture = await loadImage("../img/image.png") as HTMLImageElement
+    const level = new Level()
+    
+    const ape: Entity = new Ape(new Vec2(300, 150))
 
-    const entities: Entity[] = []
-    for (let i = 0; i < 10; i++) { entities.push(createBloon(new Vec2(200, 0))) }
+    level.entities.push(ape)
 
     const update = (dT: number) => {
-        context!.clearRect(0, 0, canvas.width, canvas.height);
-        entities.forEach(entity => {
-            entity.update(dT)
-            entity.draw(context!)
-        })
+        context!.fillStyle = "#f4f4f4"
+        context!.fillRect(0, 0, canvas.width, canvas.height);
+        context!.drawImage(texture, 10, 10)
         
+        level.lifeTime+=dT
+        level.update(dT)
+        level.draw(context!)
+
+        if (level.lifeTime > 1) {
+            level.lifeTime = 0
+            level.entities.push(new Bloon(new Vec2(200, -10)))
+        }
         return 0
     }
 
