@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Mac trash files
+.DS_Store
+
+# Remove compiled dir
+public/js/

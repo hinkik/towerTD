@@ -1,0 +1,22 @@
+{
+  "name": "towertd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hinkik/towerTD.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hinkik/towerTD/issues"
+  },
+  "homepage": "https://github.com/hinkik/towerTD#readme",
+  "dependencies": {
+    "serve": "^11.3.2"
+  }
+}
