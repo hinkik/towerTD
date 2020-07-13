@@ -1,12 +1,17 @@
 import Entity from './Entity.js'
 import Bloon from './Entities/Bloon.js'
 import Projectile from './Entities/Projectile.js'
+import Vec2 from './Vec2.js'
 
 class Level {
     towers: Entity[] = []
     bloons: Bloon[] = []
     projectiles: Projectile[] = []
     lifeTime: number = 0
+    
+    getPos(d: number): Vec2 {
+        return new Vec2()
+    }
 
     update(dT: number) {
         this.bloons.forEach((bloon) => {
@@ -20,12 +25,12 @@ class Level {
         })
         
         this.bloons.forEach((bloon, index) => {
-            if (bloon.deathTimer > 5) {
+            if (bloon.deathTimer > bloon.removeAfter) {
                 this.bloons.splice(index, 1)
             }
         })
         this.projectiles.forEach((projectile, index) => {
-            if (projectile.deathTimer > 5) {
+            if (projectile.deathTimer > projectile.removeAfter) {
                 this.projectiles.splice(index, 1)
             }
         })

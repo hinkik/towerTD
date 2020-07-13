@@ -12,7 +12,9 @@ interface Color {
 
 export default class Bloon extends Entity {
     color: Color = { r: 255, g: 0, b: 0 }
-    maxLifeTime: number = 10
+    maxLifeTime: number = 1000
+    speed: number = 70
+    dist: number = 0
     constructor(pos: Vec2) {
         super(pos, 10)
     }
@@ -29,14 +31,17 @@ export default class Bloon extends Entity {
         dCircle(context!, this.pos, this.collisionRadius) 
     }
 
-    onUpdate(dT: number, level?: Level) {
-        this.pos = this.pos.add(this.vel.scale(dT))
-        this.vel = new Vec2(10, 100)
-        if (this.lifeTime > this.maxLifeTime) {
-            this.dead = true
-        }
+    onUpdate(dT: number, level: Level) {
         if (this.dead) {
             this.deathTimer += dT
+        } else {
+            const prevPos = this.pos
+            this.pos = level.getPos(this.dist)
+            this.dist += this.speed * dT 
+            this.vel = this.pos.subt(prevPos).scale(1 / dT)
+            if (this.lifeTime > this.maxLifeTime) {
+                this.dead = true
+            }
         }
     }
 }
