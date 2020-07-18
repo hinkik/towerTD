@@ -1,9 +1,12 @@
-export function loadImage(url: string) {
-    return new Promise(resolve => {
+export function loadImage(url: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
         const image: HTMLImageElement = new Image();
         image.addEventListener('load', () => {
             resolve(image);
         });
+        image.addEventListener('error', () => {
+            reject("Image not found")
+        })
         image.src = url;
     });
 }

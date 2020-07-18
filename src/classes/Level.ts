@@ -36,7 +36,13 @@ class Level {
         })
     }
 
+    onDraw(context: CanvasRenderingContext2D) {
+
+    }
+
     draw(context: CanvasRenderingContext2D) {
+        this.onDraw(context)
+
         this.bloons.forEach((bloon) => {
             bloon.draw(context)
         })

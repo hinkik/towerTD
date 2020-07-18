@@ -1,0 +1,14 @@
+[
+    {
+        "id": 0,
+        "name": "Accuracy",
+        "desc": "Increase your range",
+        "children": []
+    },
+    {
+        "id": 1,
+        "name": "Speed",
+        "desc": "Increase your speed",
+        "children": []
+    }
+]

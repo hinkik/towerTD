@@ -13,10 +13,10 @@ interface Color {
 export default class Bloon extends Entity {
     color: Color = { r: 255, g: 0, b: 0 }
     maxLifeTime: number = 1000
-    speed: number = 70
+    speed: number = 100
     dist: number = 0
-    constructor(pos: Vec2) {
-        super(pos, 10)
+    constructor() {
+        super(new Vec2(), 10)
     }
 
     onCollision(us: Entity, them: Entity) {
@@ -25,7 +25,7 @@ export default class Bloon extends Entity {
 
     draw (context: CanvasRenderingContext2D) {
         const alpha = 1 - this.deathTimer / this.removeAfter
-        context.strokeStyle = `
+        context.fillStyle = `
             rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})
         `
         dCircle(context!, this.pos, this.collisionRadius) 
