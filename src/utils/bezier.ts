@@ -9,23 +9,6 @@ function decasteljau(P1: Vec2, P2: Vec2, P3: Vec2, P4: Vec2, t: number): Vec2 {
     return P1223.scale(1 - t).add(P2334.scale(t))
 }
 
-/* function getLengthTotal(
-    spline: (t: number) => Vec2,
-    nCurves: number,
-    samples: number
-    ): number
-{
-    const dt = nCurves / samples
-    let p0 = spline(0)
-    let length = 0
-    for (let t = dt; t < nCurves; t+=dt) {
-        let p1 = spline(t)
-        length += Math.sqrt(p1.subt(p0).length2())
-        p0 = p1
-    }
-    return length
-} */
-
 function createBezier(pointsarr: Array<number[]>) {
     const nCurves = Math.floor(pointsarr.length / 3)
     const points = pointsarr.map(p => new Vec2(p[0], p[1]))

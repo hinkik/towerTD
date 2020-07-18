@@ -1,9 +1,8 @@
 import { beginLoopAt } from './utils/timing.js'
 import Vec2 from './classes/Vec2.js'
-import Entity from './classes/Entity.js'
 import Bloon from './classes/Entities/Bloon.js'
 import Level from './classes/Level.js'
-import Ape from './classes/Entities/Ape.js'
+import { createApe } from './towers/ape.js'
 import { createLinearBezier } from './utils/bezier.js'
 import { loadImage } from './utils/loaders.js'
 
@@ -27,7 +26,7 @@ function createRedBloon() {
 
 async function loadLevel(url: string): Promise<Level> {
     const level = new Level()
-    const leveldata = await fetch(url).then(r => r.json())
+    const leveldata: ILeveldata = await fetch(url).then(r => r.json())
     try {
         const bgImage = await loadImage(`../img/levels/${leveldata.bgImage}`)
         level.onDraw = (context: CanvasRenderingContext2D) => context.drawImage(bgImage, 0, 0)
@@ -40,7 +39,7 @@ async function loadLevel(url: string): Promise<Level> {
 async function main(canvas: HTMLCanvasElement) {
     const context = canvas.getContext('2d')
     const level = await loadLevel("../leveldata/level1.json")
-    const ape: Entity = new Ape(new Vec2(300, 150))
+    const ape = createApe(new Vec2(270, 190))
     level.towers.push(ape)
     const update = (dT: number) => {
         level.lifeTime+=dT
@@ -59,6 +58,17 @@ async function main(canvas: HTMLCanvasElement) {
         return 0
     }
     beginLoopAt(1 / 60, update)
+
+    document.addEventListener("keypress", e => {
+        switch(e.keyCode) {
+            case 97:
+                ape.upgrade(0)
+                break
+            case 115:
+                ape.upgrade(1)
+                break
+        }
+    })
 }
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement
